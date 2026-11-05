@@ -22,6 +22,7 @@
 - 日志文件名 `foldercut.log` → `folder-ops.log`。
 - 「执行设置」放入滚动容器，避免小屏裁切；新增 Notebook 标签样式。
 - 打包配置改为 `packaging/FolderOps.spec`，产物 `FolderOps.app`，Bundle ID `io.folderops.app`。
+- 文档：README 新增「本地打包 / 自行构建」，明确 ad-hoc 签名、未公证、仅 arm64、首次打开的两种放行方式，以及 Intel Mac 重打包的前置依赖；TestPlan 同步补充签名/架构手工项。
 
 ### 修复
 
@@ -33,6 +34,7 @@
 
 - `script/build_app.sh` 一键构建并 ad-hoc 签名。
 - `.app` 内置 `vendor/macos-arm64/7zz`（7-Zip 26.05，LGPL），解压开箱可用。
+- 发布产物仅 arm64、未公证；Intel Mac 需在本地重打包，Windows / Linux 直接源码运行。
 
 ## [0.1.0] - 2026-11-05
 

@@ -68,6 +68,47 @@ python3 main.py --print-default-rules > rules.json
 已执行全部动作
 ```
 
+## 本地打包 / 自行构建
+
+先把当前 Release 的事实说清楚，再决定是否需要自己打包：
+
+| 项目 | 当前 Release（v0.2.0） |
+| --- | --- |
+| 签名 | ad-hoc（`codesign -dv` 显示 `Signature=adhoc`），无 Developer ID |
+| 公证 | 未公证，`spctl -a -vv` 会拒绝 |
+| 架构 | 仅 arm64（Apple Silicon），不含 x86_64 |
+| Gatekeeper | 首次打开需右键「打开」，或移除隔离属性 |
+
+首次打开被拦截时，任选一种放行方式：
+
+```bash
+# 方式 A：Finder 中右键 App →「打开」→ 弹窗里再点「打开」（只需一次）
+
+# 方式 B：移除隔离属性
+xattr -dr com.apple.quarantine /Applications/FolderOps.app
+```
+
+### Intel Mac 重打包
+
+Release 不含 Intel 产物，Intel Mac 用户需本地执行 `bash script/build_app.sh` 重新打包，前置依赖：
+
+1. Python 3.10+（脚本默认 `/opt/homebrew/bin/python3.14`，可用 `PYTHON_BIN` 覆盖），且自带 Tk 8.6：
+   `python3 -c "import tkinter; print(tkinter.TkVersion)"` 应输出 `8.6`。
+2. 可联网安装构建依赖：`pyinstaller`、`tkinterdnd2`（脚本自动建 `.venv-build` 并安装）。
+3. Xcode Command Line Tools，提供 `codesign`。
+4. 7-Zip 可执行文件：仓库已内置 arm64 版 `vendor/macos-arm64/7zz`；Intel 上需替换为 x86_64/通用版
+   （`brew install sevenzip` 后复制到该路径），或保留缺失并依赖系统 `7z`/`7zz`（解压动作回退到 PATH 查找）。
+
+```bash
+git clone https://github.com/SuHu4088/folder-ops.git
+cd folder-ops
+bash script/build_app.sh                 # 默认 Python；Intel 可指定 PYTHON_BIN
+PYTHON_BIN=/usr/bin/python3 bash script/build_app.sh
+# 产物：dist/FolderOps.app（ad-hoc 签名、未公证，仅本机架构）
+```
+
+Windows / Linux 无 `.app`，直接用源码或 CLI 运行；Windows 需安装 [7-Zip](https://www.7-zip.org/)。签名、公证与 spec 细节见 [docs/PACKAGING.md](docs/PACKAGING.md)。
+
 ## 规则模型
 
 ```json
@@ -128,7 +169,7 @@ bash script/build_app.sh
 ```
 
 - 原有 FolderCut 37 个测试全部保留并通过。
-- 新增规则引擎 / 压缩包子系统 34 个测试，覆盖条件、优先级、dry-run、冲突重命名、空目录保护、真实解压与篡改检测。
+- 新增规则引擎 / 压缩包子系统 35 个测试，覆盖条件、优先级、dry-run、冲突重命名、空目录保护、真实解压与篡改检测。
 - 详细用例与结果见 [TestPlan.md](TestPlan.md)。
 
 ## 项目结构
@@ -172,7 +213,7 @@ folder-ops/
 
 ## 已知限制
 
-- `.app` 为 macOS arm64 ad-hoc 签名，未公证；Intel Mac 需源码运行或自行重打包。
+- `.app` 为 macOS arm64 ad-hoc 签名，未公证；首次打开需右键「打开」或 `xattr -dr com.apple.quarantine`，Intel Mac 需按[本地打包](#本地打包--自行构建)重打包。
 - 加密压缩包自动尝试密码库；密码库为空时返回「未解决」，不会误删原包。
 - `.tar.gz` 等双后缀的清单解析按 7-Zip 实际输出为准。
 - 规则编辑当前通过 JSON（GUI 支持加载、预览、恢复默认）；图形化逐条编辑留待后续版本。

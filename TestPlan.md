@@ -14,6 +14,7 @@
 | 7-Zip | 26.05（`vendor/macos-arm64/7zz`） |
 | 测试框架 | pytest |
 | 执行命令 | `python3 -m pytest -q` |
+| 发布产物 | `FolderOps.app`：ad-hoc 签名、未公证、仅 arm64（Intel 需本地重打包） |
 
 ## 3. 测试分层
 
@@ -110,8 +111,10 @@ apply：移动 3、解压 1、清理空目录 1，CRC 校验通过，原包保�
 | 4 | 关闭 dry-run 再执行 | 弹确认框；确认后真实移动/解压 |
 | 5 | 取消任务 | 当前文件完成后停止，状态提示已取消 |
 | 6 | 修改规则文件为非法 JSON 并加载 | 明确错误弹窗，不崩溃 |
-| 7 | 双击 `dist/FolderOps.app` | 可启动；首次右键打开；内置 7zz 可用 |
+| 7 | 双击 `dist/FolderOps.app` | 可启动；被 Gatekeeper 拦截时右键「打开」或 `xattr -dr com.apple.quarantine` 后可用；内置 7zz 可用 |
 | 8 | 无 7-Zip 环境执行解压规则 | 该文件失败并提示安装，其他动作继续 |
+| 9 | `codesign -dv dist/FolderOps.app` | 输出 `Signature=adhoc`，架构为 arm64；`spctl` 拒绝属预期 |
+| 10 | Intel Mac 按 README「本地打包」执行 `bash script/build_app.sh` | 生成对应架构 `.app`；仍为 ad-hoc 签名、未公证，首次需右键打开 |
 
 ## 7. 回归门槛
 
@@ -122,3 +125,4 @@ apply：移动 3、解压 1、清理空目录 1，CRC 校验通过，原包保�
 3. `script/build_app.sh` 成功，`codesign --verify` 通过。
 4. GUI 手工清单 1–5 通过。
 5. CHANGELOG 与版本号一致。
+6. README「本地打包 / 自行构建」中的签名、公证、架构描述与产物实际一致。
