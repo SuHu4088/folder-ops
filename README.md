@@ -15,7 +15,7 @@
 | file-auto-classifier | `builtin_classifier` 规则插件（10 个分类） |
 | File-Sorting-Tool / File-move-tool | 被「规则 + 动作」模型覆盖，不再单独维护 GUI |
 
-原仓库全部保留、未删除、未改远端。
+原仓库全部保留、未删除，已归档为只读，并在各自 README 顶部标注指向本仓库。
 
 ## 核心特性
 
