@@ -1,0 +1,46 @@
+# ---- Python 运行时 ----
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.eggs/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# ---- 虚拟环境 ----
+.venv/
+.venv-*/
+venv/
+env/
+
+# ---- 打包与构建产物（安装包通过 Release 分发，不入库）----
+build/
+dist/
+*.app
+*.dmg
+*.pkg
+*.spec.bak
+packaging/FolderOps.iconset/*.png
+
+# ---- 系统与编辑器 ----
+.DS_Store
+._*
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# ---- 运行时数据（含个人环境信息）----
+# macOS: ~/Library/Application Support/FolderOps/config.json
+# Windows: %APPDATA%\FolderOps\config.json
+config.json
+rules.json
+
+# ---- 密码库（永远不入库，默认位于 ~/.folder_ops/password_vault）----
+password_vault/
+passwords.json
+*.vault.tmp

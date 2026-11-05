@@ -1,0 +1,2 @@
+# 运行依赖（tkinter 随 Python 标准库提供，无需安装）
+tkinterdnd2>=0.3.0

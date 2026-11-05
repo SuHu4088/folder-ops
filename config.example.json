@@ -1,0 +1,16 @@
+{
+  "window": {
+    "width": 1120,
+    "height": 880
+  },
+  "target_dir": "",
+  "options": {
+    "mechanism": "copy",
+    "recursion": "full",
+    "cleanup_empty": true,
+    "conflict": "rename",
+    "verify": true,
+    "ignore_ds_store": true,
+    "dry_run": false
+  }
+}

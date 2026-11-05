@@ -1,0 +1,356 @@
+{
+  "version": 1,
+  "settings": {
+    "target_root": "",
+    "archive_output_root": "",
+    "vault_path": "",
+    "password_module_enabled": true,
+    "delete_archive_after_verify": false,
+    "cleanup_empty": true,
+    "recursion": "full",
+    "ignore_ds_store": true
+  },
+  "rules": [
+    {
+      "id": "builtin.archive.extract",
+      "name": "自动解压（CRC 校验）",
+      "enabled": true,
+      "priority": 1,
+      "match_mode": "any",
+      "conditions": [
+        {
+          "type": "extension",
+          "values": [
+            "zip",
+            "rar",
+            "7z",
+            "tar",
+            "gz",
+            "bz2",
+            "xz",
+            "tgz"
+          ]
+        }
+      ],
+      "actions": [
+        {
+          "type": "extract",
+          "target": "",
+          "delete_original": false,
+          "password_module": true
+        },
+        {
+          "type": "cleanup_empty"
+        }
+      ],
+      "stop_on_match": true,
+      "notes": "内置解压插件：复用 archive-auto-extractor 的 CRC 三重校验与密码库"
+    },
+    {
+      "id": "builtin.classify.图片",
+      "name": "自动分类：图片",
+      "enabled": true,
+      "priority": 10,
+      "match_mode": "any",
+      "conditions": [
+        {
+          "type": "extension",
+          "values": [
+            "jpg",
+            "jpeg",
+            "png",
+            "gif",
+            "webp",
+            "heic",
+            "tiff",
+            "bmp",
+            "svg",
+            "raw",
+            "cr2",
+            "nef"
+          ]
+        }
+      ],
+      "actions": [
+        {
+          "type": "move",
+          "target": "图片",
+          "conflict": "rename",
+          "verify": false
+        }
+      ],
+      "stop_on_match": true,
+      "notes": "内置分类插件：12 种扩展名 → 图片/"
+    },
+    {
+      "id": "builtin.classify.视频",
+      "name": "自动分类：视频",
+      "enabled": true,
+      "priority": 11,
+      "match_mode": "any",
+      "conditions": [
+        {
+          "type": "extension",
+          "values": [
+            "mp4",
+            "mkv",
+            "avi",
+            "mov",
+            "wmv",
+            "flv",
+            "webm",
+            "m4v",
+            "ts",
+            "mpg",
+            "mpeg"
+          ]
+        }
+      ],
+      "actions": [
+        {
+          "type": "move",
+          "target": "视频",
+          "conflict": "rename",
+          "verify": false
+        }
+      ],
+      "stop_on_match": true,
+      "notes": "内置分类插件：11 种扩展名 → 视频/"
+    },
+    {
+      "id": "builtin.classify.音频",
+      "name": "自动分类：音频",
+      "enabled": true,
+      "priority": 12,
+      "match_mode": "any",
+      "conditions": [
+        {
+          "type": "extension",
+          "values": [
+            "mp3",
+            "flac",
+            "wav",
+            "aac",
+            "m4a",
+            "ogg",
+            "wma",
+            "opus",
+            "aiff"
+          ]
+        }
+      ],
+      "actions": [
+        {
+          "type": "move",
+          "target": "音频",
+          "conflict": "rename",
+          "verify": false
+        }
+      ],
+      "stop_on_match": true,
+      "notes": "内置分类插件：9 种扩展名 → 音频/"
+    },
+    {
+      "id": "builtin.classify.文档",
+      "name": "自动分类：文档",
+      "enabled": true,
+      "priority": 13,
+      "match_mode": "any",
+      "conditions": [
+        {
+          "type": "extension",
+          "values": [
+            "pdf",
+            "doc",
+            "docx",
+            "xls",
+            "xlsx",
+            "ppt",
+            "pptx",
+            "txt",
+            "md",
+            "rtf",
+            "csv",
+            "pages",
+            "numbers",
+            "key"
+          ]
+        }
+      ],
+      "actions": [
+        {
+          "type": "move",
+          "target": "文档",
+          "conflict": "rename",
+          "verify": false
+        }
+      ],
+      "stop_on_match": true,
+      "notes": "内置分类插件：14 种扩展名 → 文档/"
+    },
+    {
+      "id": "builtin.classify.代码",
+      "name": "自动分类：代码",
+      "enabled": true,
+      "priority": 14,
+      "match_mode": "any",
+      "conditions": [
+        {
+          "type": "extension",
+          "values": [
+            "py",
+            "js",
+            "ts",
+            "tsx",
+            "jsx",
+            "java",
+            "c",
+            "h",
+            "cpp",
+            "go",
+            "rs",
+            "rb",
+            "php",
+            "sh",
+            "json",
+            "yaml",
+            "yml",
+            "toml",
+            "html",
+            "css",
+            "sql"
+          ]
+        }
+      ],
+      "actions": [
+        {
+          "type": "move",
+          "target": "代码",
+          "conflict": "rename",
+          "verify": false
+        }
+      ],
+      "stop_on_match": true,
+      "notes": "内置分类插件：21 种扩展名 → 代码/"
+    },
+    {
+      "id": "builtin.classify.压缩包",
+      "name": "自动分类：压缩包",
+      "enabled": true,
+      "priority": 15,
+      "match_mode": "any",
+      "conditions": [
+        {
+          "type": "extension",
+          "values": [
+            "zip",
+            "rar",
+            "7z",
+            "tar",
+            "gz",
+            "bz2",
+            "xz",
+            "tgz"
+          ]
+        }
+      ],
+      "actions": [
+        {
+          "type": "move",
+          "target": "压缩包",
+          "conflict": "rename",
+          "verify": false
+        }
+      ],
+      "stop_on_match": true,
+      "notes": "内置分类插件：8 种扩展名 → 压缩包/"
+    },
+    {
+      "id": "builtin.classify.安装包",
+      "name": "自动分类：安装包",
+      "enabled": true,
+      "priority": 16,
+      "match_mode": "any",
+      "conditions": [
+        {
+          "type": "extension",
+          "values": [
+            "dmg",
+            "pkg",
+            "exe",
+            "msi",
+            "deb",
+            "rpm",
+            "apk"
+          ]
+        }
+      ],
+      "actions": [
+        {
+          "type": "move",
+          "target": "安装包",
+          "conflict": "rename",
+          "verify": false
+        }
+      ],
+      "stop_on_match": true,
+      "notes": "内置分类插件：7 种扩展名 → 安装包/"
+    },
+    {
+      "id": "builtin.classify.字体",
+      "name": "自动分类：字体",
+      "enabled": true,
+      "priority": 17,
+      "match_mode": "any",
+      "conditions": [
+        {
+          "type": "extension",
+          "values": [
+            "ttf",
+            "otf",
+            "woff",
+            "woff2"
+          ]
+        }
+      ],
+      "actions": [
+        {
+          "type": "move",
+          "target": "字体",
+          "conflict": "rename",
+          "verify": false
+        }
+      ],
+      "stop_on_match": true,
+      "notes": "内置分类插件：4 种扩展名 → 字体/"
+    },
+    {
+      "id": "builtin.classify.电子书",
+      "name": "自动分类：电子书",
+      "enabled": true,
+      "priority": 18,
+      "match_mode": "any",
+      "conditions": [
+        {
+          "type": "extension",
+          "values": [
+            "epub",
+            "mobi",
+            "azw3",
+            "pdf"
+          ]
+        }
+      ],
+      "actions": [
+        {
+          "type": "move",
+          "target": "电子书",
+          "conflict": "rename",
+          "verify": false
+        }
+      ],
+      "stop_on_match": true,
+      "notes": "内置分类插件：4 种扩展名 → 电子书/"
+    }
+  ]
+}

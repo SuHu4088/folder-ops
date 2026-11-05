@@ -1,0 +1,24 @@
+# 第三方组件与许可说明
+
+## 7-Zip（7zz）
+
+- 文件：`vendor/macos-arm64/7zz`（仅随 macOS arm64 发布包分发）
+- 版本：26.05
+- 许可：GNU LGPL v2.1+ / unRAR restriction
+- 来源：https://www.7-zip.org/
+- 用途：压缩包探测、解压、`7z t` 自检；未链接进 Python 进程，以独立可执行文件调用。
+
+## tkinterdnd2
+
+- 许可：MIT
+- 用途：可选的拖拽支持；未安装时自动降级为按钮选择。
+
+## archive-auto-extractor
+
+- 许可：MIT（本仓库作者 SuHu4088 自有项目）
+- 用途：CRC 三重校验、密码库、7z 调用的算法来源；在 `folder_ops/archive/` 中移植。
+
+## FolderCut
+
+- 许可：MIT（本仓库作者 SuHu4088 自有项目）
+- 用途：GUI、扫描、双校验移动/复制、空目录清理、测试的代码底座。
